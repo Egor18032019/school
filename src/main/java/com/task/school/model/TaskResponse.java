@@ -1,14 +1,19 @@
 package com.task.school.model;
 
 import jakarta.persistence.Column;
-import lombok.Builder;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Builder
-public record TaskResponse(String title,
-                           String description,
-                           LocalDateTime dueDate,
-                           Boolean completed) {
+@Setter
+@Getter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+public class TaskResponse{
+    private  String title;
+    private String description;
+    private LocalDateTime dueDate;
+    private Boolean completed;
 
 }
