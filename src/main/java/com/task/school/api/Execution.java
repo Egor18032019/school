@@ -46,6 +46,6 @@ public interface Execution {
      * @return TaskResponse
      */
     @DeleteMapping("/{id}")
-    ResponseEntity<TaskResponse> deleteTask(String id);
+    ResponseEntity<Object> deleteTask(String id);
 
 }

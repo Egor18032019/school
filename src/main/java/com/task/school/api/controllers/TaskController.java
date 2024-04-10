@@ -1,4 +1,4 @@
-package com.task.school.api.controller;
+package com.task.school.api.controllers;
 
 import com.task.school.api.Execution;
 import com.task.school.exeption.BadRequestException;
@@ -11,13 +11,10 @@ import com.task.school.utils.EndPoint;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = EndPoint.tasks)
@@ -61,11 +58,13 @@ public class TaskController implements Execution {
             throw new BadRequestException(id + " of the wrong format");
         }
         TaskResponse task = taskService.changeTask(idForBd, taskRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(task);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json;");
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(task);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<TaskResponse> deleteTask(@PathVariable String id) {
+    public ResponseEntity<Object> deleteTask(@PathVariable String id) {
         long idForBd;
         try {
             idForBd = Long.parseLong(id);
@@ -73,6 +72,6 @@ public class TaskController implements Execution {
             throw new BadRequestException(id + " of the wrong format");
         }
         taskService.deleteById(idForBd);
-        return ResponseEntity.status(HttpStatus.OK).body(new TaskResponse());
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
