@@ -3,7 +3,6 @@ package com.task.school.store.service;
 import com.task.school.model.TaskRequest;
 import com.task.school.model.TaskResponse;
 import com.task.school.model.TaskResponseList;
-import com.task.school.store.entity.Task;
 
 public interface TaskServiceCommon {
     TaskResponseList getAllTasks();

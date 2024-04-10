@@ -1,6 +1,7 @@
 package com.task.school.api.controller;
 
 import com.task.school.api.Execution;
+import com.task.school.exeption.BadRequestException;
 import com.task.school.model.NewTaskResponse;
 import com.task.school.model.TaskRequest;
 import com.task.school.model.TaskResponse;
@@ -38,8 +39,7 @@ public class TaskController implements Execution {
         try {
             idForBd = Long.parseLong(id);
         } catch (RuntimeException exception) {
-            System.out.println("не формат");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new TaskResponse());
+            throw new BadRequestException(id + " of the wrong format");
         }
         TaskResponse task = taskService.getTask(idForBd);
         return ResponseEntity.status(HttpStatus.OK).body(task);
@@ -58,10 +58,9 @@ public class TaskController implements Execution {
         try {
             idForBd = Long.parseLong(id);
         } catch (RuntimeException exception) {
-            System.out.println("не формат");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new TaskResponse());
+            throw new BadRequestException(id + " of the wrong format");
         }
-        TaskResponse task = taskService.changeTask(idForBd,taskRequest);
+        TaskResponse task = taskService.changeTask(idForBd, taskRequest);
         return ResponseEntity.status(HttpStatus.OK).body(task);
     }
 
@@ -71,8 +70,7 @@ public class TaskController implements Execution {
         try {
             idForBd = Long.parseLong(id);
         } catch (RuntimeException exception) {
-            System.out.println("не формат");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new TaskResponse());
+            throw new BadRequestException(id + " of the wrong format");
         }
         taskService.deleteById(idForBd);
         return ResponseEntity.status(HttpStatus.OK).body(new TaskResponse());

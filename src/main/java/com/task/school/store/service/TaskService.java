@@ -1,5 +1,7 @@
 package com.task.school.store.service;
 
+import com.task.school.exeption.BadRequestException;
+import com.task.school.exeption.NotFoundException;
 import com.task.school.model.TaskRequest;
 import com.task.school.model.TaskResponse;
 import com.task.school.model.TaskResponseList;
@@ -41,7 +43,7 @@ public class TaskService implements TaskServiceCommon {
             Task bar = foo.get();
             return new TaskResponse(bar.getTitle(), bar.getDescription(), bar.getDueDate(), bar.getCompleted());
         } else {
-            return new TaskResponse();
+            throw new NotFoundException("Not found task with " + id);
         }
     }
 
@@ -63,6 +65,8 @@ public class TaskService implements TaskServiceCommon {
             modified.setCompleted(taskRequest.getCompleted());
             modified.setId(id);// явно указал
             taskRepository.save(modified);
+        }else {
+            throw new NotFoundException("Not found task with " + id);
         }
 
         return getTask(id);
